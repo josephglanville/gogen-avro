@@ -16,6 +16,7 @@ const (
 
 	defaultPackageName     = "avro"
 	defaultContainers      = false
+	defaultDisableComment  = false
 	defaultShortUnions     = false
 	defaultNamespacedNames = nsNone
 	defaultNameCase        = generator.CaseTitle
@@ -24,6 +25,7 @@ const (
 type config struct {
 	packageName     string
 	containers      bool
+	disableComment  bool
 	shortUnions     bool
 	namespacedNames string
 	nameCase        string
@@ -38,6 +40,7 @@ func parseCmdLine() config {
 
 	flag.StringVar(&cfg.packageName, "package", defaultPackageName, "Name of generated package.")
 	flag.BoolVar(&cfg.containers, "containers", defaultContainers, "Whether to generate container writer methods.")
+	flag.BoolVar(&cfg.disableComment, "disable-comment", defaultDisableComment, "Disable adding comment to each generated file with codegen notice.")
 	flag.BoolVar(&cfg.shortUnions, "short-unions", defaultShortUnions, "Whether to use shorter names for Union types.")
 	flag.StringVar(&cfg.namespacedNames, "namespaced-names", defaultNamespacedNames, "Whether to generate namespaced names for types. Default is \"none\"; \"short\" uses the last part of the namespace (last word after a separator); \"full\" uses all namespace string.")
 	flag.StringVar(&cfg.nameCase, "name-case", defaultNameCase, "Case to use for generated names. Default is \"title\"; \"camel\" generates upper camel cased names.")
