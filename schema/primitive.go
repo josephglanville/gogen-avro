@@ -39,3 +39,7 @@ func (s *PrimitiveField) Definition(_ map[QualifiedName]interface{}) (interface{
 func (s *PrimitiveField) SimpleName() string {
 	return s.name
 }
+
+func (s *PrimitiveField) DefaultOnWrite() bool {
+	return false
+}

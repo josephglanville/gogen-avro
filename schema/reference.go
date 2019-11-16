@@ -60,6 +60,10 @@ func (s *Reference) DefaultValue(lvalue string, rvalue interface{}) (string, err
 	return s.Def.DefaultValue(lvalue, rvalue)
 }
 
+func (s *Reference) DefaultOnWrite() bool {
+	return s.Def.DefaultOnWrite()
+}
+
 func (s *Reference) WrapperType() string {
 	return s.Def.WrapperType()
 }

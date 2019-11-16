@@ -133,6 +133,10 @@ func (s *UnionField) DefaultValue(lvalue string, rvalue interface{}) (string, er
 	return init + constructorCall + assignment, err
 }
 
+func (s *UnionField) DefaultOnWrite() bool {
+	return true
+}
+
 func (s *UnionField) WrapperType() string {
 	return ""
 }

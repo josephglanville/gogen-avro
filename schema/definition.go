@@ -29,6 +29,7 @@ type Definition interface {
 	// A JSON object defining this object, for writing the schema back out
 	Definition(scope map[QualifiedName]interface{}) (interface{}, error)
 	DefaultValue(lvalue string, rvalue interface{}) (string, error)
+	DefaultOnWrite() bool
 
 	IsReadableBy(f Definition) bool
 	WrapperType() string

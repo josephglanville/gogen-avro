@@ -108,6 +108,10 @@ func (s *EnumDefinition) DefaultValue(lvalue string, rvalue interface{}) (string
 	return fmt.Sprintf("%v = %v", lvalue, generator.ToPublicName(s.GoType()+strings.Title(rvalue.(string)))), nil
 }
 
+func (s *EnumDefinition) DefaultOnWrite() bool {
+	return false
+}
+
 func (s *EnumDefinition) IsReadableBy(d Definition) bool {
 	otherEnum, ok := d.(*EnumDefinition)
 	return ok && otherEnum.name == s.name

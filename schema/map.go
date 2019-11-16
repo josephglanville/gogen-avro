@@ -86,6 +86,10 @@ func (s *MapField) DefaultValue(lvalue string, rvalue interface{}) (string, erro
 	return setters, nil
 }
 
+func (s *MapField) DefaultOnWrite() bool {
+	return false
+}
+
 func (s *MapField) WrapperType() string {
 	return ""
 }

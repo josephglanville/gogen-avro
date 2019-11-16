@@ -169,6 +169,10 @@ func (r *RecordDefinition) DefaultValue(lvalue string, rvalue interface{}) (stri
 	return fieldSetters, nil
 }
 
+func (r *RecordDefinition) DefaultOnWrite() bool {
+	return true
+}
+
 func (r *RecordDefinition) Fields() []*Field {
 	return r.fields
 }
