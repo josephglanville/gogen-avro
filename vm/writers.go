@@ -155,6 +155,43 @@ func encodeInt(w io.Writer, byteCount int, encoded uint64) error {
 
 }
 
+func encodeBigInt(w io.Writer, byteCount int, number *big.Int) {
+	var err error
+	bb := make([]byte, 0, byteCount)
+	if n.Sign() < 0 {
+		// A negative number has to be converted to two's-complement
+		// form. So we'll invert and subtract 1. If the
+		// most-significant-bit isn't set then we'll need to pad the
+		// beginning with 0xff in order to keep the number negative.
+		nMinus1 := new(big.Int).Neg(n)
+		nMinus1.Sub(nMinus1, bigOne)
+		bytes := nMinus1.Bytes()
+		for i := range bytes {
+			bytes[i] ^= 0xff
+		}
+		if len(bytes) == 0 || bytes[0]&0x80 == 0 {
+			bb = append(bb, 0xff)
+		}
+		for i := range bytes {
+			bb = append(bb, bytes[i])
+		}
+	} else if n.Sign() == 0 {
+		bb = append(bb, 0x00)
+	} else {
+		bytes := n.Bytes()
+		if len(bytes) > 0 && bytes[0]&0x80 != 0 {
+			// We'll have to pad this with 0x00 in order to stop it
+			// looking like a negative number.
+			bb = append(bb, 0x00)
+		}
+		for i := range bytes {
+			bb = append(bb, bytes[i])
+		}
+	}
+	_, err := w.Write(bb)
+	return err
+}
+
 func WriteNull(_ interface{}, _ io.Writer) error {
 	return nil
 }
